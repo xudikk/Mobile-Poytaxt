@@ -7,7 +7,7 @@
 #  Tashkent, Uzbekistan
 from dotenv import load_dotenv
 import os
-from .views import PMView
+from api.v1.views import PMView
 from django.urls import path, include
 
 load_dotenv()
