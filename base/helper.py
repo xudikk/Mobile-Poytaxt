@@ -1,4 +1,4 @@
-#  Xudikk Copyright (c) 2023/3/29.
+#  Xudikk  2023/3/29.
 #
 #  Created by Xudoyberdi Egamberdiyev
 #
@@ -21,13 +21,15 @@ def custom_response(status, data=None, message=None, method=None):
     }
 
 
-def generate_key(cls, rg=50):
+def generate_key(rg=50):
     return binascii.hexlify(os.urandom(rg)).decode()
 
 
 def code_decoder(code, decode=False, l=1):
     if decode:
-        return
+        for i in range(l):
+            code = base64.b64decode(code).decode()
+        return code
     else:
         for i in range(l):
             code = base64.b64encode(str(code).encode()).decode()

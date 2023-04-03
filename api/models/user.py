@@ -1,4 +1,4 @@
-#  Xudikk Copyright (c) 2023/3/29.
+#  Xudikk  2023/3/29.
 #
 #  Created by Xudoyberdi Egamberdiyev
 #
@@ -13,15 +13,15 @@ from django.contrib.auth.base_user import BaseUserManager
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, username, password, is_active=True, is_staff=False, is_superuser=False, **extra_fields):
-        user = self.model(username=username, is_active=is_active, is_staff=is_staff, is_superuser=is_superuser,
+    def create_user(self, phone, password, is_active=True, is_staff=False, is_superuser=False, **extra_fields):
+        user = self.model(phone=phone, is_active=is_active, is_staff=is_staff, is_superuser=is_superuser,
                           **extra_fields)
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, username, password, **extra_fields):
-        return self.create_user(username, password, is_active=True, is_staff=True, is_superuser=True, **extra_fields)
+    def create_superuser(self, phone, password, **extra_fields):
+        return self.create_user(phone, password, is_active=True, is_staff=True, is_superuser=True, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):

@@ -1,4 +1,4 @@
-#  Xudikk Copyright (c) 2023/3/29.
+#  Xudikk  2023/3/29.
 #
 #  Created by Xudoyberdi Egamberdiyev
 #
@@ -180,4 +180,7 @@ EXTERNAL_URLS = {
 
 
 RANGE = int(os.getenv('RANGE', 5))
+
+CUSTOM_HASHING = os.getenv("HASHING")
+UNHASH = os.getenv("UNHASH")
 

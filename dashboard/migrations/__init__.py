@@ -1,4 +1,4 @@
-#  Xudikk Copyright (c) 2023/3/29.
+#  Xudikk  2023/3/29.
 #
 #  Created by Xudoyberdi Egamberdiyev
 #

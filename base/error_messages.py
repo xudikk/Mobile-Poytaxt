@@ -14,6 +14,11 @@ MESSAGE = {
         'ru': "Пользователь вышел из системы",
         'en': "User has been logged out",
     },
+    "TokenUnUsable": {
+        'uz': "Yaroqsiz Token",
+        'ru': "Yaroqsiz Token",
+        'en': "Yaroqsiz Token",
+    },
     "AuthToken": {
         'uz': "Token aniqlanmadi",
         'ru': "Token aniqlanmadi",
@@ -28,6 +33,11 @@ MESSAGE = {
         "uz": "OTP bilan telefon raqam tog'ri kelmadi",
         "en": "The phone number did not match with OTP",
         "ru": "Номер телефона не совпал с OTP",
+    },
+    'OtpError': {
+        "uz": "Maxfiy code xato",
+        "en": "Maxfiy code xato",
+        "ru": "Maxfiy code xato",
     },
     "PasswordMust": {
         'uz': f"< password > to'ldirishili shart",
@@ -198,6 +208,11 @@ MESSAGE = {
         'ru': "Этот номер телефона уже зарегистрирован",
         'en': "This phone number is already registered",
     },
+    "LENPHONE": {
+        'uz': "Telefon raqam uzunligi 12ta bo'lishi kerak",
+        'ru': "Telefon raqam uzunligi 12ta bo'lishi kerak",
+        'en': "Telefon raqam uzunligi 12ta bo'lishi kerak",
+    },
 
     "BlockSessionDenied": {
         'uz': "Bu qurilma boshqasini bekor qila olmaydi",
@@ -240,21 +255,12 @@ MESSAGE = {
         'en': "UUID Error",
         'ru': 'Проблема с UUID'
     },
-    "OTPLen5": {
-        'uz': "OTP kalit uzunligi 5taga teng emas!",
-        'en': "Длина ключа OTP не равна 5!",
-        'ru': 'OTP key length is not equal to 5!'
-    },
     "OTPExpired": {
         'uz': "OTP token eskirgan",
         'ru': "Токен OTP устарел",
         'en': "OTP token is expired",
     },
-    "Xato OTP": {
-        'uz': "Xato OTP",
-        'en': "Ошибка одноразового пароля",
-        'ru': 'Error OTP'
-    },
+
     'OTPTokenError': {
         "uz": "Otp token xato",
         "en": "Otp token error",

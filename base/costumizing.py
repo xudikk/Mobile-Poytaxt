@@ -1,3 +1,12 @@
+#  Xudikk  2023/3/29.
+#
+#  Created by Xudoyberdi Egamberdiyev
+#
+#  Please contact before making any changes
+#
+#  Tashkent, Uzbekistan
+
+
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework.authentication import TokenAuthentication, get_authorization_header, BasicAuthentication
 from rest_framework.generics import GenericAPIView

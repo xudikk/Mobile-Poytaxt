@@ -1,4 +1,4 @@
-#  Xudikk Copyright (c) 2023/3/29.
+#  Xudikk  2023/3/29.
 #
 #  Created by Xudoyberdi Egamberdiyev
 #
@@ -27,7 +27,7 @@ class Otp(models.Model):
     mobile = models.CharField(max_length=20)
     is_expired = models.BooleanField(default=False)
     tries = models.SmallIntegerField(default=0)
-    extra = models.JSONField(default={})
+    extra = models.JSONField(default=dict({}))
     is_verified = models.BooleanField(default=False)
     step = models.CharField(max_length=25)
 
@@ -40,4 +40,4 @@ class Otp(models.Model):
         return super(Otp, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.key}-{self.mobile}"
+        return f"{self.mobile} -> {self.key}"
