@@ -28,14 +28,14 @@ def view_news(requests, params):
     if not new: return custom_response(False, message=MESSAGE['NotData'])
     new.viewed += 1
     new.save()
-    NewsRead.objects.get_or_create(news=params['news_id'], user=requests.user)
+    NewsRead.objects.get_or_create(news=new, user=requests.user)
     return custom_response(True, data=new.res())
 
 
 def like_news(requests, params):
     new = News.objects.filter(id=params.get('news_id', 0)).first()
     if not new: return custom_response(False, message=MESSAGE['NotData'])
-    news_read = NewsRead.objects.get_or_create(news=params['news_id'], user=requests.user)[0]
+    news_read = NewsRead.objects.get_or_create(news=new, user=requests.user)[0]
     if not news_read.liked:
         new.likes += 1
         new.save()
