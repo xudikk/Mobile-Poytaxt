@@ -5,6 +5,8 @@
 #  Please contact before making any changes
 #
 #  Tashkent, Uzbekistan
+
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
@@ -48,6 +50,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name_plural = "1. Users"
 
+    def personal(self):
+        root = {
+            'firstname': self.first_name,
+            'lastname': self.last_name,
+            'mobile': self.phone
+        }
+        sessions = Session.objects.filter(user=self, revoke=0, block=0)
+        return {
+            'user': root,
+            "sessions": [x.res() for x in sessions]
+        }
+
 
 class Device(models.Model):
     # code
@@ -64,3 +78,26 @@ class Device(models.Model):
 
     class Meta:
         verbose_name_plural = "10. Device"
+
+
+class Session(models.Model):
+    # code
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="session")
+    name = models.CharField('Device name', max_length=100, null=True)
+    uuid = models.CharField('Device uuid', max_length=128)
+    revoke = models.IntegerField('Revoke', default=0)
+    block = models.IntegerField('Block', default=0)
+    primary = models.IntegerField('Primary', default=0)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def res(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'uuid': self.uuid
+        }
+
+    class Meta:
+        verbose_name_plural = "11. Session"

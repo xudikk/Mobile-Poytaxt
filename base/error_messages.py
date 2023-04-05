@@ -1,3 +1,11 @@
+#  Xudikk  2023/3/29.
+#
+#  Created by Xudoyberdi Egamberdiyev
+#
+#  Please contact before making any changes
+#
+#  Tashkent, Uzbekistan
+
 MESSAGE = {
     "DataNotFull": {
         'uz': "Kerakli ma'lumotlar kiritilmagan",
@@ -18,6 +26,11 @@ MESSAGE = {
         'uz': "Yaroqsiz Token",
         'ru': "Yaroqsiz Token",
         'en': "Yaroqsiz Token",
+    },
+    "user_not": {
+        'uz': "Foydalanuvchi topilmadi",
+        'en': "User not found",
+        'ru': 'Пользователь не найден'
     },
     "AuthToken": {
         'uz': "Token aniqlanmadi",
@@ -281,6 +294,11 @@ MESSAGE = {
         'uz': "Ushbu UUID Blocklangan",
         'ru': "Этот UUID заблокирован",
         'en': "This UUID is blocked",
+    },
+    'UUIDNotOrBlocked': {
+        'uz': "Ushbu UUID Topilmadi yoki Blocklangan",
+        'ru': "Этот UUID Не найден или заблокирован",
+        'en': "This UUID is Not Found or Blocked",
     },
     'UUIDExpired': {
         'uz': "Ushbu UUID Eskirgan",

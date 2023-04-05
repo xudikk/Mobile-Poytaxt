@@ -46,6 +46,8 @@ class PMView(CustomGenericAPIView):
         except AttributeError:
             return Response(custom_response(False, method=method, message=MESSAGE['MethodDoesNotExist']))
 
-        res = map(funk, [requests], [method], [params])
-        return Response(list(res)[0])
+        res = map(funk, [requests], [params])
+        response = Response(list(res)[0])
+        response.data.update({'method': method})
+        return response
 

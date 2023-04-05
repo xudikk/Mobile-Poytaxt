@@ -1,0 +1,25 @@
+#  Xudikk  2023/3/29.
+#
+#  Created by Xudoyberdi Egamberdiyev
+#
+#  Please contact before making any changes
+#
+#  Tashkent, Uzbekistan
+
+TRANSFER = 0
+PAYMENT = 1
+MTS_TRANSFER = 2
+MTS_PAYMENT = 3
+TCB_TRANSFER = 4
+TCB_PAYMENT = 5
+TCB_RF_TRANSFER = 6
+CONVERSION = 7
+VISA_TRANSFER = 8
+COIN_TRANSFER = 9
+TJ_TU_TRANSFER = 10
+TJ_UT_TRANSFER = 11
+ARMENIA_TRANSFER = 12
+TURKEY_TRANSFER = 13
+KAZAKH_TRANSFER = 14
+AZR_TRANSFER = 15
+MKO_TRANSFER = 16

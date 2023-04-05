@@ -34,3 +34,16 @@ def code_decoder(code, decode=False, l=1):
         for i in range(l):
             code = base64.b64encode(str(code).encode()).decode()
         return code
+
+
+def card_mask(number):
+    return number[0:4] + ' **** **** ' + number[12:16]
+
+
+
+
+
+
+
+
+
