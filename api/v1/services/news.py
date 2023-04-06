@@ -38,14 +38,13 @@ def like_news(requests, params):
     news_read = NewsRead.objects.get_or_create(news=new, user=requests.user)[0]
     if not news_read.liked:
         new.likes += 1
-        new.save()
         news_read.liked = True
-        news_read.save()
     else:
         new.likes -= 1
-        new.save()
         news_read.liked = False
-        news_read.save()
+
+    new.save()
+    news_read.save()
     return custom_response(True, data=new.res())
 
 

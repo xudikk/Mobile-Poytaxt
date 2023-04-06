@@ -6,9 +6,16 @@
 #
 #  Tashkent, Uzbekistan
 
-from api.models import Session, ExpiredToken, Token
+from api.models import Session, ExpiredToken, Token, User
 from base.error_messages import MESSAGE
 from base.helper import custom_response
+from rest_framework import serializers
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name']
 
 
 def check_pass(requests, params):
@@ -57,3 +64,18 @@ def remove_session(requests, params):
         session.block = 1
     session.save()
     return custom_response(True, data={'success': True})
+
+
+def user_edit(request, params):
+    try:
+        ser = UserSerializer(data=params, instance=request.user, partial=True)
+        ser.is_valid()
+        user = ser.save()
+        return custom_response(True, data=user.personal())
+    except Exception as e:
+        error = {
+            "value": str(e.__str__()),
+            "line": str(e.__traceback__.tb_lineno),
+            "frame": str(e.__traceback__.tb_frame),
+        }
+        return custom_response(False, data=error, message=MESSAGE['UndefinedError'])

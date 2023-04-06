@@ -7,6 +7,11 @@
 #  Tashkent, Uzbekistan
 
 MESSAGE = {
+    'UndefinedError': {
+        "uz": "Nomalum xatolik yuz berdi",
+        "ru": "Произошла неопределенная ошибка",
+        "en": "Undefined error occurred",
+    },
     "DataNotFull": {
         'uz': "Kerakli ma'lumotlar kiritilmagan",
         'en': "Missing data",

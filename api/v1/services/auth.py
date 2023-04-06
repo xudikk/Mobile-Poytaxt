@@ -57,11 +57,10 @@ def auth_two(requests, params):
         otp.step, otp.tries = 'two', otp.tries + 1
         otp.save()
         return custom_response(False, message=MESSAGE['OtpError'])
-    otp.is_verified = True
+    otp.is_verified, otp.is_expired = True
     user = User.objects.filter(phone=otp.mobile).first()
     otp.step = 'login' if user else 'regis'
     otp.save()
-
     return custom_response(True, data={'is_registered': user is not None})
 
 
@@ -71,7 +70,8 @@ def regis(requests, params):
     otp = Otp.objects.filter(key=params['token']).first()
     if not otp: return custom_response(False, message=MESSAGE['OTPTokenError'])
     if not otp.step != 'regis': return custom_response(False, message=MESSAGE['TokenUnUsable'])
-    if not otp.is_verified: return custom_response(False, message=MESSAGE['TokenUnUsable'])
+    if not otp.is_verified or (datetime.datetime.now() - otp.created).total_seconds() > 180:
+        return custom_response(False, message=MESSAGE['TokenUnUsable'])
 
     user = User.objects.create_user(phone=params['phone'], password=params['password'],
                                     first_name=params.get('first_name', ''), last_name=params.get('last_name', ''),
@@ -114,8 +114,7 @@ def login(requests, params):
         name=params['details'].get('name', None),
         uuid=params['details'].get('uuid', None),
         version=params['details'].get('version', None),
-        firebase_reg_id=params['details'].get('firebase_reg_id', None),
-    )
+        firebase_reg_id=params['details'].get('firebase_reg_id', None))
     session = Session.objects.filter(user=user, uuid=params['details'].get('uuid', '')).first()
     if session:
         session.user = user

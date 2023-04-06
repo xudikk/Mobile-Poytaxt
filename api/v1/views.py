@@ -5,12 +5,10 @@
 #  Please contact before making any changes
 #
 #  Tashkent, Uzbekistan
-import os
 
 from api.models import Token
-from base.costumizing import CustomBasicAuthentication, CustomGenericAPIView, BearerAuth
+from base.costumizing import CustomGenericAPIView
 from base.decors import method_and_params_checker
-from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.conf import settings
 from rest_framework.response import Response
 
@@ -21,7 +19,7 @@ from api import v1
 
 
 class PMView(CustomGenericAPIView):
-
+    """ Main Function | METHODIZM """
     @method_and_params_checker
     def post(self, requests, *args, **kwargs):
         method = requests.data.get("method")
@@ -47,7 +45,15 @@ class PMView(CustomGenericAPIView):
             return Response(custom_response(False, method=method, message=MESSAGE['MethodDoesNotExist']))
 
         res = map(funk, [requests], [params])
-        response = Response(list(res)[0])
-        response.data.update({'method': method})
+        try:
+            response = Response(list(res)[0])
+            response.data.update({'method': method})
+        except Exception as e:
+            error = {
+                "value": str(e.__str__()),
+                "line": str(e.__traceback__.tb_lineno),
+                "frame": str(e.__traceback__.tb_frame),
+            }
+            response = Response(custom_response(False, method=method, message=MESSAGE['UndefinedError'], data=error))
         return response
 
