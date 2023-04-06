@@ -52,8 +52,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def personal(self):
         root = {
-            'firstname': self.first_name,
-            'lastname': self.last_name,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
             'mobile': self.phone
         }
         sessions = Session.objects.filter(user=self, revoke=0, block=0)
