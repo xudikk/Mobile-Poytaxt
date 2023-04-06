@@ -5,13 +5,11 @@
 #  Please contact before making any changes
 #
 #  Tashkent, Uzbekistan
-from dotenv import load_dotenv
 import os
 from api.v1.views import PMView
 from django.urls import path, include
-
-load_dotenv()
+from django.conf import settings
 
 urlpatterns = [
-    eval(os.getenv('UNIQUE')),
+    eval(settings.UNIQUE),
 ]
