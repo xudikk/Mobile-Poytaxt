@@ -12,6 +12,8 @@ from django.conf import settings
 
 
 def custom_response(status, data=None, message=None, method=None):
+    if type(status) is not bool:
+        status = False
     return {
         "Origin": settings.APP_NAME,
         "method": method,

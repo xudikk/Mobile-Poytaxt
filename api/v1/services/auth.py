@@ -57,7 +57,7 @@ def auth_two(requests, params):
         otp.step, otp.tries = 'two', otp.tries + 1
         otp.save()
         return custom_response(False, message=MESSAGE['OtpError'])
-    otp.is_verified, otp.is_expired = True
+    otp.is_verified, otp.is_expired = True, True
     user = User.objects.filter(phone=otp.mobile).first()
     otp.step = 'login' if user else 'regis'
     otp.save()
@@ -69,10 +69,12 @@ def regis(requests, params):
         return custom_response(False, message=MESSAGE['ParamsNotFull'])
     otp = Otp.objects.filter(key=params['token']).first()
     if not otp: return custom_response(False, message=MESSAGE['OTPTokenError'])
-    if not otp.step != 'regis': return custom_response(False, message=MESSAGE['TokenUnUsable'])
-    if not otp.is_verified or (datetime.datetime.now() - otp.created).total_seconds() > 180:
-        return custom_response(False, message=MESSAGE['TokenUnUsable'])
-
+    if otp.step != 'regis': return custom_response(False, message=MESSAGE['TokenUnUsable'])
+    if not otp.is_verified: return custom_response(False, message=MESSAGE['TokenUnUsable'])
+    if (datetime.datetime.now() - otp.created).total_seconds() > 180:
+        otp.is_expired = True
+        otp.save()
+        return custom_response(False, message=MESSAGE['OTPExpired'])
     user = User.objects.create_user(phone=params['phone'], password=params['password'],
                                     first_name=params.get('first_name', ''), last_name=params.get('last_name', ''),
                                     email=params.get('email', ''), avatar='avatar', is_sms=False)
