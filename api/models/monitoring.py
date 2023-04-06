@@ -46,10 +46,10 @@ class Monitoring(models.Model):
     terminal = models.CharField(max_length=64, null=True)
     note = models.CharField(max_length=128, null=True)
     is_credit = models.IntegerField(default=1)
-    # created_at = models.DateTimeField(auto_now_add=True)
-    # updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=False, null=True, editable=True)
-    updated_at = models.DateTimeField(auto_now_add=False, null=True, editable=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    # created_at = models.DateTimeField(auto_now_add=False, null=True, editable=True)
+    # updated_at = models.DateTimeField(auto_now_add=False, null=True, editable=True)
 
     def auto_save(self, user, sender, receiver_data, t_type, pay_type, com_type, amount, currency, note):
         expire = sender['expire']
