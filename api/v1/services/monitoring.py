@@ -44,9 +44,7 @@ def monitoring_one(requests, params):
     start = params.get('start', None)
     end = params.get('end', None)
     if not monitorings:
-        return {
-            'message': MESSAGE['NotData']
-        }
+        return custom_response(False, message=MESSAGE['NotData'])
     if not start and not end:
         monitorings = Monitoring.objects.filter(Q(sender_token=token) | Q(receiver_token=token))
     if start and not end:

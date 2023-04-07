@@ -19,7 +19,7 @@ from api import v1
 
 
 class PMView(CustomGenericAPIView):
-    """ Main Function | METHODIZM """
+    """ Main Class | METHODIZM """
     @method_and_params_checker
     def post(self, requests, *args, **kwargs):
         method = requests.data.get("method")
