@@ -1,5 +1,4 @@
-#  Xudikk  2023/3/29.
-#
+
 #  Created by Xudoyberdi Egamberdiyev
 #
 #  Please contact before making any changes
@@ -7,8 +6,6 @@
 #  Tashkent, Uzbekistan
 import datetime
 import random
-
-from dotenv import load_dotenv
 
 from api.models import Otp, User, Token, Device, Session
 from base.error_messages import MESSAGE
