@@ -12,7 +12,7 @@ from django.conf import settings
 from rest_framework.response import Response
 
 from base.error_messages import MESSAGE
-from base.helper import custom_response
+from base.helper import custom_response, exception_data
 from re import compile as re_compile
 from api import v1
 
@@ -42,17 +42,15 @@ class PMView(CustomGenericAPIView):
             funk = getattr(v1, method.replace('.', '_').replace('-', '_'))
         except AttributeError:
             return Response(custom_response(False, method=method, message=MESSAGE['MethodDoesNotExist']))
-
+        except Exception as e:
+            return Response(custom_response(False, method=method, message=MESSAGE['UndefinedError'],
+                                            data=exception_data(e)))
         res = map(funk, [requests], [params])
         try:
             response = Response(list(res)[0])
             response.data.update({'method': method})
         except Exception as e:
-            error = {
-                "value": str(e.__str__()),
-                "line": str(e.__traceback__.tb_lineno),
-                "frame": str(e.__traceback__.tb_frame),
-            }
-            response = Response(custom_response(False, method=method, message=MESSAGE['UndefinedError'], data=error))
+            response = Response(custom_response(False, method=method, message=MESSAGE['UndefinedError'],
+                                                data=exception_data(e)))
         return response
 

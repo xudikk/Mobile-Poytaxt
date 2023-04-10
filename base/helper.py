@@ -1,4 +1,3 @@
-
 #  Created by Xudoyberdi Egamberdiyev
 #
 #  Please contact before making any changes
@@ -22,6 +21,14 @@ def custom_response(status, data=None, message=None, method=None):
     }
 
 
+def exception_data(e):
+    return {
+        "value": str(e.__str__()),
+        "line": str(e.__traceback__.tb_lineno),
+        "frame": str(e.__traceback__.tb_frame),
+    }
+
+
 def generate_key(rg=50):
     return binascii.hexlify(os.urandom(rg)).decode()
 
@@ -39,12 +46,3 @@ def code_decoder(code, decode=False, l=1):
 
 def card_mask(number):
     return number[0:4] + ' **** **** ' + number[12:16]
-
-
-
-
-
-
-
-
-

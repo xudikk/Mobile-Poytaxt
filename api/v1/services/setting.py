@@ -7,7 +7,7 @@
 
 from api.models import Session, ExpiredToken, Token, User
 from base.error_messages import MESSAGE
-from base.helper import custom_response
+from base.helper import custom_response, exception_data
 from rest_framework import serializers
 
 
@@ -72,9 +72,4 @@ def user_edit(request, params):
         user = ser.save()
         return custom_response(True, data=user.personal())
     except Exception as e:
-        error = {
-            "value": str(e.__str__()),
-            "line": str(e.__traceback__.tb_lineno),
-            "frame": str(e.__traceback__.tb_frame),
-        }
-        return custom_response(False, data=error, message=MESSAGE['UndefinedError'])
+        return custom_response(False, data=exception_data(e), message=MESSAGE['UndefinedError'])
