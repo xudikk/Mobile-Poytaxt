@@ -27,6 +27,7 @@ def auth_one(requests, params):
         return custom_response(False, message=MESSAGE['LENPHONE'])
 
     otp = random.randint(int(f'1{"0" * (settings.RANGE - 1)}'), int('9' * settings.RANGE))
+
     # sms chiqib ketadi
     code = eval(settings.CUSTOM_HASHING)
     hash = code_decoder(code, l=settings.RANGE)
@@ -64,6 +65,8 @@ def auth_two(requests, params):
 def regis(requests, params):
     if 'phone' not in params or 'password' not in params or "token" not in params or 'details' not in params:
         return custom_response(False, message=MESSAGE['ParamsNotFull'])
+
+    # check otp
     otp = Otp.objects.filter(key=params['token']).first()
     if not otp: return custom_response(False, message=MESSAGE['OTPTokenError'])
     if otp.step != 'regis': return custom_response(False, message=MESSAGE['TokenUnUsable'])
@@ -75,6 +78,8 @@ def regis(requests, params):
     user = User.objects.create_user(phone=params['phone'], password=params['password'],
                                     first_name=params.get('first_name', ''), last_name=params.get('last_name', ''),
                                     email=params.get('email', ''), avatar='avatar', is_sms=False)
+
+    # create fixtures
     token = Token.objects.create(user=user)
     device = Device.objects.create(
         user=user, ip=params['details'].get('ip', None), imei=params['details'].get('imei', None),
@@ -82,7 +87,7 @@ def regis(requests, params):
         uuid=params['details'].get('uuid', None), version=params['details'].get('version', None),
         firebase_reg_id=params['details'].get('firebase_reg_id', None),
     )
-    session = Session.objects.create(user=user, name=device.name, uuid=device.uuid, primary=1)
+    Session.objects.create(user=user, name=device.name, uuid=device.uuid, primary=1)
     otp.step = 'registered'
     otp.save()
     return custom_response(status=True, data={'access_token': token.key, 'mobile': user.phone})
@@ -91,18 +96,20 @@ def regis(requests, params):
 def login(requests, params):
     if 'phone' not in params or 'password' not in params or "token" not in params or 'details' not in params:
         return custom_response(False, message=MESSAGE['ParamsNotFull'])
+
     # otp check
     otp = Otp.objects.filter(key=params['token']).first()
     if not otp: return custom_response(False, message=MESSAGE['OTPTokenError'])
     if not otp.step != 'login': return custom_response(False, message=MESSAGE['TokenUnUsable'])
-
     if not otp.is_verified: return custom_response(False, message=MESSAGE['TokenUnUsable'])
     if otp.mobile != str(params['phone']): return custom_response(False, message=MESSAGE['OTPPhoneAndPhoneNotMatch'])
+
     # user check
     user = User.objects.filter(phone=params['phone']).first()
     if not user: return custom_response(False, message=MESSAGE['UserNot'])
     if not user.is_active: return custom_response(False, message=MESSAGE['UserDeleted'])
     if not user.check_password(params['password']): return custom_response(False, message=MESSAGE['PasswordError'])
+
     # create fixtures
     token = Token.objects.get_or_create(user=user)[0]
     device = Device.objects.create(

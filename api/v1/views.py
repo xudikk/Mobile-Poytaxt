@@ -33,11 +33,10 @@ class PMView(CustomGenericAPIView):
             input_token = pattern.findall(authorization)[0]
 
             # Authorize
-            try:
-                token = Token.objects.get(key=input_token)
-                requests.user = token.user
-            except Token.DoesNotExist:
+            token = Token.objects.filter(key=input_token).first()
+            if not token:
                 return Response(custom_response(status=False, method=method, message=MESSAGE['AuthToken']))
+            requests.user = token.user
         try:
             funk = getattr(v1, method.replace('.', '_').replace('-', '_'))
         except AttributeError:

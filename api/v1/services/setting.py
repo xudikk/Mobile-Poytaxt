@@ -1,4 +1,3 @@
-
 #  Created by Xudoyberdi Egamberdiyev
 #
 #  Please contact before making any changes
@@ -57,10 +56,8 @@ def remove_session(requests, params):
     if 'session_id' not in params: return custom_response(False, message=MESSAGE['ParamsNotFull'])
     session = Session.objects.filter(id=params['session_id'], revoke=0, block=0).first()
     if not session: return custom_response(False, message=MESSAGE['NotData'])
-    if params.get('revoke', 0):
-        session.revoke = 1
-    if params.get('block', 0):
-        session.block = 1
+    if params.get('revoke', 0): session.revoke = 1
+    if params.get('block', 0): session.block = 1
     session.save()
     return custom_response(True, data={'success': True})
 
