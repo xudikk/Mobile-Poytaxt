@@ -33,20 +33,17 @@ def user_info(requests, params):
 
 
 def change_pass(requests, params):
-    if 'password' not in params:
-        return custom_response(False, message=MESSAGE['ParamsNotFull'])
+    if 'password' not in params: return custom_response(False, message=MESSAGE['ParamsNotFull'])
     requests.user.set_password(params['password'])
     requests.user.save()
     return custom_response(True, data={'success': True})
 
 
 def logout(requests, params):
-    exp = ExpiredToken()
     tokens = Token.objects.filter(user=requests.user)
     if tokens:
         for x in tokens:
-            exp.key, exp.user = x.key, x.user
-            exp.save()
+            ExpiredToken.objects.create(key=x.key, user=x.user)
         tokens.delete()
         return custom_response(True, data={'success': True})
     return custom_response(False, message=MESSAGE['user_not'])

@@ -22,7 +22,7 @@ def single_news(requests, params):
     return custom_response(True, data=new.res())
 
 
-def view_news(requests, params):
+def view_news(requests, params: list):
     new = News.objects.filter(id=params.get('news_id', 0)).first()
     if not new: return custom_response(False, message=MESSAGE['NotData'])
     new.viewed += 1

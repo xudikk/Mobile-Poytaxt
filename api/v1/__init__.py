@@ -9,7 +9,7 @@
 """ DIQQAT Bu yerda import qilganda * dan foydalanish mumkin emas """
 from base.helper import custom_response as cr
 
-from api.v1.services.auth import regis, login, auth_one, auth_two
+from api.v1.services.auth import regis, login, auth_one, auth_two, resent_otp
 from api.v1.services.home import home
 from api.v1.services.news import single_news, all_news, like_news, view_news
 from api.v1.services.setting import user_info, check_pass, change_pass, logout, user_edit

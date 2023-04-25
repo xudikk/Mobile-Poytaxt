@@ -25,10 +25,8 @@ def auth_one(requests, params):
         return custom_response(False, message=MESSAGE['ParamsNotFull'])
     if len(str(params['phone'])) != 12:
         return custom_response(False, message=MESSAGE['LENPHONE'])
-
     otp = random.randint(int(f'1{"0" * (settings.RANGE - 1)}'), int('9' * settings.RANGE))
-
-    # sms chiqib ketadi
+    # shu yerda sms chiqib ketadi
     code = eval(settings.CUSTOM_HASHING)
     hash = code_decoder(code, l=settings.RANGE)
     token = Otp.objects.create(key=hash, mobile=params['phone'], step='one')
@@ -36,6 +34,21 @@ def auth_one(requests, params):
     return custom_response(True, data={
         "otp": otp,
         "token": token.key
+    })
+
+
+def resent_otp(requests, params):
+    if 'token' not in params: return custom_response(False, message=MESSAGE['ParamsNotFull'])
+    otp = Otp.objects.filter(key=params['token']).first()
+    if not otp: return custom_response(False, message=MESSAGE['OTPTokenError'])
+    if otp.is_expired: return custom_response(False, message=MESSAGE['OTPExpired'])
+    if otp.is_verified: return custom_response(False, message=MESSAGE['TokenUnUsable'])
+    unhashed = code_decoder(otp.key, decode=True, l=settings.RANGE)
+    code = eval(settings.UNHASH)
+    # sms chiqib ketadi shu yerda
+    return custom_response(True, data={
+        "otp": int(code),
+        "token": params['token']
     })
 
 
@@ -75,9 +88,9 @@ def regis(requests, params):
         otp.is_expired = True
         otp.save()
         return custom_response(False, message=MESSAGE['OTPExpired'])
-    user = User.objects.create_user(phone=params['phone'], password=params['password'],
-                                    first_name=params.get('first_name', ''), last_name=params.get('last_name', ''),
-                                    email=params.get('email', ''), avatar='avatar', is_sms=False)
+    data = {'phone': params['phone'], 'password': params['password'], 'first_name': params.get('first_name', ''),
+            'last_name': params.get('last_name', ''), 'email': params.get('email', ''), 'avatar': 'avatar', 'is_sms': False}
+    user = User.objects.create_user(**data)
 
     # create fixtures
     token = Token.objects.create(user=user)
