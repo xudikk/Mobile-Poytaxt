@@ -113,7 +113,7 @@ def login(requests, params):
     # otp check
     otp = Otp.objects.filter(key=params['token']).first()
     if not otp: return custom_response(False, message=MESSAGE['OTPTokenError'])
-    if not otp.step != 'login': return custom_response(False, message=MESSAGE['TokenUnUsable'])
+    if otp.step != 'login': return custom_response(False, message=MESSAGE['TokenUnUsable'])
     if not otp.is_verified: return custom_response(False, message=MESSAGE['TokenUnUsable'])
     if otp.mobile != str(params['phone']): return custom_response(False, message=MESSAGE['OTPPhoneAndPhoneNotMatch'])
 
