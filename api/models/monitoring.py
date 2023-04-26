@@ -10,7 +10,7 @@ import jsonfield
 from django.db import models
 
 from api.models import User
-from base import helper, transfer_description, transfer_type_description, transfer_type
+from helpbase import helper, transfer_description, transfer_type_description, transfer_type
 
 
 class Monitoring(models.Model):

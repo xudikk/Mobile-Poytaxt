@@ -8,8 +8,8 @@ import datetime
 import random
 
 from api.models import Otp, User, Token, Device, Session
-from base.error_messages import MESSAGE
-from base.helper import generate_key, custom_response, code_decoder
+from helpbase.error_messages import MESSAGE
+from helpbase.helper import generate_key, custom_response, code_decoder
 import uuid
 from django.conf import settings
 

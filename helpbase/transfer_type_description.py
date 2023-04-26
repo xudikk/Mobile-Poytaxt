@@ -5,7 +5,7 @@
 #
 #  Tashkent, Uzbekistan
 
-from base import transfer_type
+from helpbase import transfer_type
 
 
 def get_description(state):

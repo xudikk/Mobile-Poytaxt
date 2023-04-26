@@ -7,7 +7,7 @@
 #  Tashkent, Uzbekistan
 
 """ DIQQAT Bu yerda import qilganda * dan foydalanish mumkin emas """
-from base.helper import custom_response as cr
+from helpbase.helper import custom_response as cr
 
 from api.v1.services.auth import regis, login, auth_one, auth_two, resent_otp
 from api.v1.services.home import home

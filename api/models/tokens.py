@@ -11,7 +11,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from api.models.user import User
-from base.helper import generate_key
+from helpbase.helper import generate_key
 
 
 class Token(authtoken.Token):

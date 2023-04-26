@@ -1,55 +1,15 @@
-
-#  Created by Xudoyberdi Egamberdiyev
-#
-#  Please contact before making any changes
-#
-#  Tashkent, Uzbekistan
-
-from api.models import Token
-from base.costumizing import CustomGenericAPIView
-from base.decors import method_and_params_checker
+from base.main import METHODIZM
 from django.conf import settings
-from rest_framework.response import Response
 
-from base.error_messages import MESSAGE
-from base.helper import custom_response, exception_data
-from re import compile as re_compile
 from api import v1
+from api.models.tokens import Token
 
 
-class PMView(CustomGenericAPIView):
-    """ Main Class | METHODIZM """
-    @method_and_params_checker
-    def post(self, requests, *args, **kwargs):
-        method = requests.data.get("method")
-        params = requests.data.get("params")
-        headers = requests.headers
-        if method not in settings.METHODS:
-            authorization = headers.get('Authorization', '')
-            pattern = re_compile(r"Bearer (.+)")
+class PMView(METHODIZM):
+    file = v1
+    token_key = "Bearer"
+    auth_headers = 'Authorization'
+    token_class = Token
+    not_auth_methods = settings.METHODS
 
-            if not pattern.match(authorization):
-                return Response(custom_response(status=False, method=method, message=MESSAGE['NotAuthenticated']))
-            input_token = pattern.findall(authorization)[0]
-
-            # Authorize
-            token = Token.objects.filter(key=input_token).first()
-            if not token:
-                return Response(custom_response(status=False, method=method, message=MESSAGE['AuthToken']))
-            requests.user = token.user
-        try:
-            funk = getattr(v1, method.replace('.', '_').replace('-', '_'))
-        except AttributeError:
-            return Response(custom_response(False, method=method, message=MESSAGE['MethodDoesNotExist']))
-        except Exception as e:
-            return Response(custom_response(False, method=method, message=MESSAGE['UndefinedError'],
-                                            data=exception_data(e)))
-        res = map(funk, [requests], [params])
-        try:
-            response = Response(list(res)[0])
-            response.data.update({'method': method})
-        except Exception as e:
-            response = Response(custom_response(False, method=method, message=MESSAGE['UndefinedError'],
-                                                data=exception_data(e)))
-        return response
 
