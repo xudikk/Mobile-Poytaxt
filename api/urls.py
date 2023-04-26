@@ -5,7 +5,7 @@
 #
 #  Tashkent, Uzbekistan
 import os
-from api.v1.views import PMView
+from api.views import PMView
 from django.urls import path, include
 from django.conf import settings
 
