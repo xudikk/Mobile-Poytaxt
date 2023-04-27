@@ -8,7 +8,7 @@ django-soft-delete==0.9.21
 djangorestframework==3.14.0
 idna==3.4
 jsonfield==3.1.0
-methodism==0.0.1
+methodism==0.0.2
 python-dotenv==1.0.0
 pytz==2023.2
 requests==2.28.2
