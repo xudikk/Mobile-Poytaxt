@@ -1,4 +1,4 @@
-from base.main import METHODIZM
+from methodism.main import METHODIZM
 from django.conf import settings
 
 from api import methods

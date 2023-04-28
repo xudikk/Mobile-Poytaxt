@@ -11,8 +11,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 
 from api.models import Monitoring
-from base.error_messages import MESSAGE
-from base.helper import custom_response
+from methodism.error_messages import MESSAGE
+from methodism.helper import custom_response
 
 
 def monitoring_all(requests, params):

@@ -6,7 +6,7 @@
 
 from api.models import Session, ExpiredToken, Token, User
 from helpbase.error_messages import MESSAGE
-from base.helper import custom_response, exception_data
+from methodism.helper import custom_response, exception_data
 from rest_framework import serializers
 
 
