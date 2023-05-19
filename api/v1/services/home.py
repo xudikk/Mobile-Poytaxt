@@ -23,8 +23,8 @@ def home(requests, params):
     transfer = TransferSave.objects.filter(user=user).order_by('-pk')[:3]
     paynet = PaynetSave.objects.filter(user=user).order_by('-pk')[:3]
 
-    data = {'balance_sum': sum_card['balance__sum'],
-            'balance_usd': usd_card['balance__sum'],
+    data = {'balance_sum': sum_card['balance__sum'] or 0,
+            'balance_usd': usd_card['balance__sum'] or 0,
             # 'identification': bool(identification),
             'have_news': news > news_read,
             'transfer': [x.res() for x in transfer],

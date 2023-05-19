@@ -23,7 +23,7 @@ def custom_response(status, data=None, message=None, method=None):
 
 def exception_data(e):
     return {
-        "value": str(e.__str__()),
+        "value": f"""{str(type(e)).strip("<class '").strip("'>")} => {str(e.__str__())}""",
         "line": str(e.__traceback__.tb_lineno),
         "frame": str(e.__traceback__.tb_frame),
     }

@@ -20,14 +20,8 @@ from api.v1.services.monitoring import monitoring_all, monitoring_one
 
 """ Method Names Getter """
 
-unusable_method = cr(True, data=dir())
+unusable_method = cr(True, data=[x.replace('_', '.') for x in dir() if '__' not in x and x != 'cr'])
 
 
 def method_names(requests, params):
-    datas = []
-    for i in unusable_method.get('data', []):
-        if '__' not in i and i != 'cr':
-            datas.append(i.replace('_', '.'))
-
-    unusable_method.update({'data': datas})
     return unusable_method
