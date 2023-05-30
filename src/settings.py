@@ -179,7 +179,6 @@ EXTERNAL_URLS = {
 
 
 RANGE = int(os.getenv('RANGE', 5))
-UNIQUE = os.getenv('UNIQUE')
 
 CUSTOM_HASHING = os.getenv("HASHING")
 UNHASH = os.getenv("UNHASH")

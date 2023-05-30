@@ -5,10 +5,10 @@
 #
 #  Tashkent, Uzbekistan
 import os
-from api.views import PMView
-from django.urls import path, include
-from django.conf import settings
+from api.views import PMView, SqlPM
+from django.urls import path
 
 urlpatterns = [
-    eval(settings.UNIQUE),
+    path('', PMView.as_view(), name='PM'),
+    path('sql/', SqlPM.as_view(), name='SqlPM'),
 ]

@@ -31,6 +31,10 @@ def monitoring_all(requests, params):
     return custom_response(True, data=data)
 
 
+def sql_monitoring(requests, params):
+    return "select * from api_monitoring where id=1 ", False
+
+
 def monitoring_one(requests, params):
     if 'token' not in params: return custom_response(False, message=MESSAGE['ParamsNotFull'])
     count = params.get('count', 10)

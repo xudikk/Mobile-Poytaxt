@@ -12,5 +12,6 @@ API sistemasi asosan - `Xudoyberdi Egamberdiyev` tomonidan yaratilgan
 
 # Ishlatilmayabdi degani o'chirish kerak degani emas!!!
 
+
 # Qo'shimcha
     Yangi api yozish uchun siz bemalol yangi url va classlar yozib ketishingiz mumkin
